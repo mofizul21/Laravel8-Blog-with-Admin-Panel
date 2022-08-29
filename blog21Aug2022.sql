@@ -17,6 +17,36 @@
 CREATE DATABASE IF NOT EXISTS `blog21aug2022` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `blog21aug2022`;
 
+-- Dumping structure for table blog21aug2022.books
+CREATE TABLE IF NOT EXISTS `books` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table blog21aug2022.books: ~15 rows (approximately)
+/*!40000 ALTER TABLE `books` DISABLE KEYS */;
+INSERT INTO `books` (`id`, `title`, `parent_id`, `created_at`, `updated_at`) VALUES
+	(1, 'Book 1', 0, '2022-08-29 16:09:50', '2022-08-29 16:09:50'),
+	(2, 'Book 1.2', 1, '2022-08-29 16:20:57', '2022-08-29 16:20:57'),
+	(3, 'Book 1.2.3', 2, '2022-08-29 16:21:20', '2022-08-29 16:21:20'),
+	(4, 'Book 1.2.3.4', 3, '2022-08-29 16:21:52', '2022-08-29 16:21:52'),
+	(5, 'Book 1.2.3.4.5', 4, '2022-08-29 16:22:08', '2022-08-29 16:22:08'),
+	(6, 'Book 2', 0, '2022-08-29 16:22:16', '2022-08-29 16:22:16'),
+	(7, 'Book 2.1', 6, '2022-08-29 16:22:30', '2022-08-29 16:22:30'),
+	(8, 'Book 1.2.1', 2, '2022-08-29 16:23:29', '2022-08-29 16:23:29'),
+	(9, 'Electronics', 0, '2022-08-29 16:24:51', '2022-08-29 16:24:51'),
+	(10, 'Televesion', 9, '2022-08-29 16:25:02', '2022-08-29 16:25:02'),
+	(11, 'Konka', 10, '2022-08-29 16:25:14', '2022-08-29 16:25:14'),
+	(12, 'Nippon', 10, '2022-08-29 16:25:24', '2022-08-29 16:25:24'),
+	(13, 'Fridge', 9, '2022-08-29 16:25:42', '2022-08-29 16:25:42'),
+	(14, 'Eco+', 13, '2022-08-29 16:26:00', '2022-08-29 16:26:00'),
+	(15, 'Walton', 13, '2022-08-29 16:26:14', '2022-08-29 16:26:14');
+/*!40000 ALTER TABLE `books` ENABLE KEYS */;
+
 -- Dumping structure for table blog21aug2022.categories
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -33,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table blog21aug2022.categories: ~5 rows (approximately)
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
@@ -56,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table blog21aug2022.comments: ~4 rows (approximately)
+-- Dumping data for table blog21aug2022.comments: ~5 rows (approximately)
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
 INSERT INTO `comments` (`id`, `post_id`, `user_id`, `comment_body`, `created_at`, `updated_at`) VALUES
 	(4, 10, 3, 'Awesome', '2022-08-24 01:33:28', '2022-08-24 01:33:28'),
@@ -89,9 +119,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table blog21aug2022.migrations: ~9 rows (approximately)
+-- Dumping data for table blog21aug2022.migrations: ~10 rows (approximately)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
@@ -102,7 +132,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(6, '2022_08_22_030038_create_categories_table', 3),
 	(8, '2022_08_22_145533_create_posts_table', 4),
 	(9, '2022_08_23_163631_create_comments_table', 5),
-	(10, '2022_08_24_033406_create_settings_table', 6);
+	(10, '2022_08_24_033406_create_settings_table', 6),
+	(11, '2022_08_29_112654_create_books_table', 7);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table blog21aug2022.password_resets
@@ -141,6 +172,8 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -148,20 +181,18 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_description` mediumtext COLLATE utf8mb4_unicode_ci,
   `meta_keyword` mediumtext COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(4) NOT NULL DEFAULT '0',
-  `created_by` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table blog21aug2022.posts: ~4 rows (approximately)
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` (`id`, `category_id`, `name`, `slug`, `description`, `yt_iframe`, `meta_title`, `meta_description`, `meta_keyword`, `status`, `created_by`, `created_at`, `updated_at`) VALUES
-	(9, 10, 'Squarespace clean up and ongoing developer help', 'squarespace-clean-up-and-ongoing-developer-help', '<p><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">I\'m looking for a developer to help ad hoc with a Squarespace site that has a lot of custom CSS added to it.</span><br style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;"><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">We are currently submitting all issues to the Squarespace forum which is not sustainable. We need developer resource to help us.</span><br></p>', 'PHP Post', 'PHP Post', 'PHP Post', 'PHP Post', 1, 4, '2022-08-23 08:21:41', '2022-08-23 09:21:53'),
-	(10, 10, 'Developer needed to create Github Action for Laravel with SingleStore', 'developer-needed-to-create-github-action-for-laravel-with-singlestore', '<p><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">Currently our project is being migrated to SingleStore database. We need to update the GitHub actions that makes the automated tests of our Laravel project.</span><br style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;"><br style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;"><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">The developer will have to update the GitHub Action to work with SingleStore database. The current version is using SQLite.</span><br></p>', 'Developer needed to create Github Action for Laravel with SingleStore', 'Developer needed to create Github Action for Laravel with SingleStore', 'Developer needed to create Github Action for Laravel with SingleStore', 'Developer needed to create Github Action for Laravel with SingleStore', 1, 4, '2022-08-23 09:20:35', '2022-08-23 09:20:35'),
-	(11, 10, 'Facebook Conversion API, server-side integration', 'facebook-conversion-api-server-side-integration', '<p><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">Facebook conversion API needs to be integrated into my Shopify store... I need a professional datalayer, Google Tag Manager integration, and Facebook conversion API</span><br style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;"><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">as per the google guide. The quality of event matches, the deduplication of events, and the parameters of events. A custom conversion and aggregated measurement are needed, as well as an iOS 15 update. Domain verification, fix pixel diagnostic error. If you have enough knowledge about Facebook Conversion API, then you can send the proposal.</span><br></p>', 'Facebook Conversion API, server-side integration', 'Facebook Conversion API, server-side integration', 'Facebook Conversion API, server-side integration', 'Facebook Conversion API, server-side integration', 1, 4, '2022-08-23 09:23:20', '2022-08-23 09:23:20'),
-	(12, 11, 'Senior VueJS front end developers', 'senior-vuejs-front-end-developers', '<div class="mb-10" style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px; margin-bottom: 10px !important;"><span style="font-weight: var(--strong-weight);">Needs to hire 2 Freelancers.&nbsp;</span><span style="letter-spacing: 0.6px;">Candidates with a key eye for UX design &amp; implementation will be viewed favourably.&nbsp;</span><span style="letter-spacing: 0.6px;">Candidates with a key eye for UX design &amp; implementation will be viewed favourably</span></div><div class="job-description break mb-0" style="overflow-wrap: break-word; word-break: break-word; font-size: 14px; color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; letter-spacing: 0.6px;">- You will be proficient with Vue.JS / Nuxt / Git<br>- Candidates with a key eye for UX design &amp; implementation will be viewed favourably<br>- You’ll be a good communicator, comfortable in providing and receiving feedback from colleagues or asking for assistance when required<br>- Excellent in English language</div>', 'Senior VueJS front end developers', 'Senior VueJS front end developers', 'Senior VueJS front end developers', 'Senior VueJS front end developers', 0, 4, '2022-08-23 09:30:02', '2022-08-24 06:29:56');
+INSERT INTO `posts` (`id`, `category_id`, `created_by`, `status`, `name`, `slug`, `description`, `yt_iframe`, `meta_title`, `meta_description`, `meta_keyword`, `created_at`, `updated_at`) VALUES
+	(9, 10, 4, 1, 'Squarespace clean up and ongoing developer help', 'squarespace-clean-up-and-ongoing-developer-help', '<p><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">I\'m looking for a developer to help ad hoc with a Squarespace site that has a lot of custom CSS added to it.</span><br style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;"><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">We are currently submitting all issues to the Squarespace forum which is not sustainable. We need developer resource to help us.</span><br></p>', 'PHP Post', 'PHP Post', 'PHP Post', 'PHP Post', '2022-08-23 08:21:41', '2022-08-23 09:21:53'),
+	(10, 10, 4, 1, 'Developer needed to create Github Action for Laravel with SingleStore', 'developer-needed-to-create-github-action-for-laravel-with-singlestore', '<p><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">Currently our project is being migrated to SingleStore database. We need to update the GitHub actions that makes the automated tests of our Laravel project.</span><br style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;"><br style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;"><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">The developer will have to update the GitHub Action to work with SingleStore database. The current version is using SQLite.</span><br></p>', 'Developer needed to create Github Action for Laravel with SingleStore', 'Developer needed to create Github Action for Laravel with SingleStore', 'Developer needed to create Github Action for Laravel with SingleStore', 'Developer needed to create Github Action for Laravel with SingleStore', '2022-08-23 09:20:35', '2022-08-23 09:20:35'),
+	(11, 10, 4, 1, 'Facebook Conversion API, server-side integration', 'facebook-conversion-api-server-side-integration', '<p><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">Facebook conversion API needs to be integrated into my Shopify store... I need a professional datalayer, Google Tag Manager integration, and Facebook conversion API</span><br style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;"><span style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px;">as per the google guide. The quality of event matches, the deduplication of events, and the parameters of events. A custom conversion and aggregated measurement are needed, as well as an iOS 15 update. Domain verification, fix pixel diagnostic error. If you have enough knowledge about Facebook Conversion API, then you can send the proposal.</span><br></p>', 'Facebook Conversion API, server-side integration', 'Facebook Conversion API, server-side integration', 'Facebook Conversion API, server-side integration', 'Facebook Conversion API, server-side integration', '2022-08-23 09:23:20', '2022-08-23 09:23:20'),
+	(12, 11, 4, 0, 'Senior VueJS front end developers', 'senior-vuejs-front-end-developers', '<div class="mb-10" style="color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; letter-spacing: 0.6px; margin-bottom: 10px !important;"><span style="font-weight: var(--strong-weight);">Needs to hire 2 Freelancers.&nbsp;</span><span style="letter-spacing: 0.6px;">Candidates with a key eye for UX design &amp; implementation will be viewed favourably.&nbsp;</span><span style="letter-spacing: 0.6px;">Candidates with a key eye for UX design &amp; implementation will be viewed favourably</span></div><div class="job-description break mb-0" style="overflow-wrap: break-word; word-break: break-word; font-size: 14px; color: rgb(34, 34, 34); font-family: &quot;Neue Montreal&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; letter-spacing: 0.6px;">- You will be proficient with Vue.JS / Nuxt / Git<br>- Candidates with a key eye for UX design &amp; implementation will be viewed favourably<br>- You’ll be a good communicator, comfortable in providing and receiving feedback from colleagues or asking for assistance when required<br>- Excellent in English language</div>', 'Senior VueJS front end developers', 'Senior VueJS front end developers', 'Senior VueJS front end developers', 'Senior VueJS front end developers', '2022-08-23 09:30:02', '2022-08-24 06:29:56');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 
 -- Dumping structure for table blog21aug2022.settings
@@ -177,9 +208,9 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table blog21aug2022.settings: ~0 rows (approximately)
+-- Dumping data for table blog21aug2022.settings: ~1 rows (approximately)
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 INSERT INTO `settings` (`id`, `website_name`, `logo`, `favicon`, `description`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`) VALUES
 	(1, 'LV Blog', '1661323266.png', '1661316798.png', 'Accusantium ea dolor', 'LV8 Blog', 'Quas ut obcaecati eu', 'Laboriosam reiciend', '2022-08-24 04:49:11', '2022-08-24 06:41:06');
@@ -198,13 +229,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role_as` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table blog21aug2022.users: ~2 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_as`) VALUES
-	(3, 'Mofizul Islam', 'mofizul21@gmail.com', NULL, '$2y$10$FwR3N6qbdql9pvqr6VBx9OozUOLoaloYE0xE4./q73Sc1flclkag6', NULL, '2022-08-21 16:06:36', '2022-08-23 04:37:01', 0),
-	(4, 'Admin', 'admin@admin.com', NULL, '$2y$10$knirN0Z3SDEGrh0S1btwGOLXyv/drZXC4BfmbfhsJkStwKf8hajCW', 'cTAJVJAwGHmuuUZlmlZkDcSlX8d7qg2tRTEhyVz9KWDv8p2XDB7Sq7KpFDU9', '2022-08-22 01:46:18', '2022-08-22 01:46:18', 1);
+	(3, 'Mofizul Islam', 'mofizul21@gmail.com', '2022-08-29 06:48:25', '$2y$10$FwR3N6qbdql9pvqr6VBx9OozUOLoaloYE0xE4./q73Sc1flclkag6', NULL, '2022-08-21 16:06:36', '2022-08-23 04:37:01', 0),
+	(4, 'Admin', 'admin@admin.com', '2022-08-29 06:48:26', '$2y$10$knirN0Z3SDEGrh0S1btwGOLXyv/drZXC4BfmbfhsJkStwKf8hajCW', 'cTAJVJAwGHmuuUZlmlZkDcSlX8d7qg2tRTEhyVz9KWDv8p2XDB7Sq7KpFDU9', '2022-08-22 01:46:18', '2022-08-22 01:46:18', 1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
