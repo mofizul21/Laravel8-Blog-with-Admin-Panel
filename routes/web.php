@@ -17,7 +17,7 @@ Route::get('/', [FrontendController::class, 'index']);
 Route::get('/tutorial/{category_slug}', [FrontendController::class, 'viewCategorySlug']);
 Route::get('/tutorial/{category_slug}/{post_slug}', [FrontendController::class, 'viewPost']); // View single Post
 
-// Hierarchical Books
+// Unlimited Hierarchical Book Tree View
 Route::get('book-tree-view', [App\Http\Controllers\BookController::class, 'manageBook'])->name('book-tree-view');
 Route::post('add-book', [App\Http\Controllers\BookController::class, 'addBook'])->name('add.book');
 
